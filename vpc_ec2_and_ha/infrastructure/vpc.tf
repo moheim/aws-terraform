@@ -1,14 +1,14 @@
 provider "aws" {
     region = "${var.region}"
-    access_key = "AKIAQIHBXKGHLRTFEOOS"
-    secret_key = "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"
+    access_key = ""
+    secret_key = "+"
   
 }
 terraform {
   backend "s3" {
     region = "us-east-1"
-    access_key = "AKIAQIHBXKGHLRTFEOOS"
-    secret_key = "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"
+    access_key = ""
+    secret_key = "+"
   }
 }
 resource "aws_vpc" "production-vpc" {
