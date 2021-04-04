@@ -1,7 +1,7 @@
 provider "aws" {
   region     = var.region
-  access_key = "AKIAU34G2G6WGIINMICM"
-  secret_key = "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"
+  access_key = ""
+  secret_key = "/qKjMmAsavsp"
 
 }
 terraform {
@@ -9,8 +9,8 @@ terraform {
     region     = "us-east-1"
     //bucket = "moheim-terraform-remote-state"
     //key = "layer2/backend.tfstate"
-    access_key = "AKIAU34G2G6WGIINMICM"
-    secret_key = "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"
+    access_key = ""
+    secret_key = "/"
   }
 }
 data "terraform_remote_state" "network_configuration" {
@@ -19,8 +19,8 @@ data "terraform_remote_state" "network_configuration" {
     bucket = "moheim1-terraform-remote-state"
     key    = "layer1/infrastructure.tfstate"
     region = "us-east-1"
-    access_key = "AKIAU34G2G6WGIINMICM"
-    secret_key = "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"
+    access_key = ""
+    secret_key = "/"
   }
 
 }
