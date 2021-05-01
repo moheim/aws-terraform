@@ -1,0 +1,79 @@
+1. Create Cluster:
+eksctl create cluster --name fluent-bit-demo --nodegroup-name ng-default --node-type t3.small --nodes 2
+2. eksctl delete cluster --name=prometheus-demo
+2. eksctl create cluster --name fargaet-demo --fargate
+3. eksctl create fargateprofile --cluster fargate-demo --name frontend-profile --namespace frontendapp
+3.  kubectl create ns frontendapp
+3.kubectl apply -f nginx-deployment.yaml -n frontendapp
+3. kubectl get all -n frontendapp
+3. kubectl describe pod test-cb66476d7-8kmr4 -n frontendapp
+
+2. Create nodegroup fron yml file:
+eksctl create nodegroup --config-file=eksctl-create-ng.yaml
+3. Create cluster fron yml file:
+eksctl create cluster --config-file=eksctl-create-cluster.yaml
+4. eksctl get cluster
+4. kubectl get ns
+5. kubectl get pods -n kube-system
+6. kubectl apply -f nginx-deployment.yaml
+7. kubectl apply -f nginx-deployment.yaml
+8. kubectl get all
+9. kubectl get pods -o wide
+9. kubectl apply -f loadbalancer-service.yaml
+10. kubectl describe service
+11. kubectl describe service
+12. kubectl get svc
+13. kubectl describe pod < pod Name>
+14. kubectl get pods -w --namespace=<NapeSpaceName>
+15. kubectl get deployment metrics-server -n kube-system
+16. 
+
+
+
+
+Note: command cheat sheet: https://kubernetes.io/docs/reference/kubectl/cheatsheet/
+
+
+++++++Helm +++++
+1. helm search repo
+2.helm repo update
+3.helm search repo nginx
+4.helm search repo wordpress
+5. helm search hub nginx
+6. helm repo add bitnami https://charts.bitnami.com/bitnami
+7.helm pull bitnami/nginx --untar=true
+9.helm install helm-nginx bitnami/nginx
+10. kubectl get pods -w --namespace=kube-system
+
+
+
+
+
+
+
+
+
+
+
+ClusterName=prometheus-demo
+RegionName=us-east-1
+FluentBitHttpPort='2020'
+FluentBitReadFromHead='Off'
+[[ ${FluentBitReadFromHead} = 'On' ]] && FluentBitReadFromTail='Off'|| FluentBitReadFromTail='On'
+[[ -z ${FluentBitHttpPort} ]] && FluentBitHttpServer='Off' || FluentBitHttpServer='On'
+curl https://raw.githubusercontent.com/aws-samples/amazon-cloudwatch-container-insights/latest/k8s-deployment-manifest-templates/deployment-mode/daemonset/container-insights-monitoring/quickstart/cwagent-fluent-bit-quickstart.yaml | sed 's/{{cluster_name}}/'${ClusterName}'/;s/{{region_name}}/'${RegionName}'/;s/{{http_server_toggle}}/"'${FluentBitHttpServer}'"/;s/{{http_server_port}}/"'${FluentBitHttpPort}'"/;s/{{read_from_head}}/"'${FluentBitReadFromHead}'"/;s/{{read_from_tail}}/"'${FluentBitReadFromTail}'"/' | kubectl apply -f - 
+
+
+
+ClusterName='prometheus-demo'
+LogRegion='us-east-1'
+FluentBitHttpPort='2020'
+FluentBitReadFromHead='Off'
+[[ ${FluentBitReadFromHead} = 'On' ]] && FluentBitReadFromTail='Off'|| FluentBitReadFromTail='On'
+[[ -z ${FluentBitHttpPort} ]] && FluentBitHttpServer='Off' || FluentBitHttpServer='On'
+curl https://raw.githubusercontent.com/aws-samples/amazon-cloudwatch-container-insights/latest/k8s-deployment-manifest-templates/deployment-mode/daemonset/container-insights-monitoring/quickstart/cwagent-fluent-bit-quickstart.yaml | sed 's/{{cluster_name}}/'${ClusterName}'/;s/{{region_name}}/'${LogRegion}'/;s/{{http_server_toggle}}/"'${FluentBitHttpServer}'"/;s/{{http_server_port}}/"'${FluentBitHttpPort}'"/;s/{{read_from_head}}/"'${FluentBitReadFromHead}'"/;s/{{read_from_tail}}/"'${FluentBitReadFromTail}'"/' | kubectl apply -f - 
+
+
+
+
+curl https://raw.githubusercontent.com/aws-samples/amazon-cloudwatch-container-insights/latest/k8s-deployment-manifest-templates/deployment-mode/daemonset/container-insights-monitoring/quickstart/cwagent-fluent-bit-quickstart.yaml | sed "s/{{cluster_name}}/prometheus-demo/;s/{{region_name}}/us-east-1/" | kubectl apply -f - 

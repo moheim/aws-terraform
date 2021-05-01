@@ -1,0 +1,19 @@
+--- 
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: eksclt-test-moheim
+  region: us-east-1
+
+nodeGroups:
+  - name: ng1-public
+    instanceType: t2.micro
+    desiredCapacity: 2
+  
+managedNodeGroups:
+  - name: ng2-managed
+    instanceType: t2.micro
+    minSize: 1
+    maxSize: 3
+    desiredCapacity: 2  
